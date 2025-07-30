@@ -12,8 +12,6 @@ Minimal web service with an `/echo` endpoint that returns an environment variabl
 - Docker image following best practices
 - Kubernetes Deployment with 2 replicas
 - Internal Service on port 80
-- Readiness/Liveness probes
-- ConfigMap for environment variables
 
 ## Installation
 
