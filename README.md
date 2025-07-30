@@ -1,0 +1,24 @@
+# Echo Web Service API
+
+![Python](https://img.shields.io/badge/python-3.10-blue)
+![Django](https://img.shields.io/badge/django-5.2-brightgreen)
+![Docker](https://img.shields.io/badge/docker-%3E=20.10-blue)
+![Kubernetes](https://img.shields.io/badge/kubernetes-%3E=1.23-326ce5)
+
+Minimal web service with an `/echo` endpoint that returns an environment variable value.
+
+## Key Features
+- Python/Django web service
+- Docker image following best practices
+- Kubernetes Deployment with 2 replicas
+- Internal Service on port 80
+- Readiness/Liveness probes
+- ConfigMap for environment variables
+
+## Installation
+
+### 1. Build Docker image
+```bash
+docker build -t echo-service .
+kubectl apply -f k8s/deployment.yaml
+kubectl port-forward service/echo-service 8080:80
