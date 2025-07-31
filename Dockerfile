@@ -16,14 +16,6 @@ RUN adduser --disabled-password appuser && \
 
 USER appuser
 
+EXPOSE 8000  
 
-RUN apt-get update && \
-    apt-get install -y authbind && \
-    rm -rf /var/lib/apt/lists/* && \
-    touch /etc/authbind/byport/80 && \
-    chown appuser /etc/authbind/byport/80 && \
-    chmod 755 /etc/authbind/byport/80
-
-EXPOSE 80
-
-CMD ["authbind", "--deep", "python", "manage.py", "runserver", "0.0.0.0:80"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"] 
