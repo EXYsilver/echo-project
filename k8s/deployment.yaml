@@ -4,6 +4,10 @@ metadata:
   name: echo-deployment
 spec:
   replicas: 2
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   selector:
     matchLabels:
       app: echo
@@ -17,22 +21,38 @@ spec:
           image: echo-service:latest
           imagePullPolicy: Never
           ports:
-            - containerPort: 8000 
+            - containerPort: 8000
           env:
             - name: ECHO_MESSAGE
-              value: "Hello from Abdullo"
+              valueFrom:
+                configMapKeyRef:
+                  name: echo-config
+                  key: ECHO_MESSAGE
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "200m"
+              memory: "256Mi"
           readinessProbe:
             httpGet:
               path: /echo/
-              port: 8000 
+              port: 8000
             initialDelaySeconds: 5
             periodSeconds: 5
+            timeoutSeconds: 2
+            successThreshold: 1
+            failureThreshold: 3
           livenessProbe:
             httpGet:
               path: /echo/
-              port: 8000 
-            initialDelaySeconds: 10
+              port: 8000
+            initialDelaySeconds: 15
             periodSeconds: 10
+            timeoutSeconds: 2
+            successThreshold: 1
+            failureThreshold: 3
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
@@ -50,5 +70,5 @@ spec:
   ports:
     - name: http
       protocol: TCP
-      port: 80      
-      targetPort: 8000  
+      port: 80
+      targetPort: 8000
