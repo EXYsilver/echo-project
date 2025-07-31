@@ -19,12 +19,12 @@ spec:
       containers:
         - name: echo-container
           image: echo-service:latest
-          imagePullPolicy: Never  # Используем локальный образ
+          imagePullPolicy: Never
           ports:
-            - containerPort: 8000
+            - containerPort: 80  
           env:
             - name: ECHO_MESSAGE
-              value: "Hello from K8s"
+              value: "Hello I'm Abdullo"
           resources:
             requests:
               cpu: "100m"
@@ -35,25 +35,20 @@ spec:
           readinessProbe:
             httpGet:
               path: /echo/
-              port: 8000
-            initialDelaySeconds: 10  # Увеличенная задержка для Django
+              port: 80  
+            initialDelaySeconds: 10
             periodSeconds: 5
-            timeoutSeconds: 2
-            successThreshold: 1
-            failureThreshold: 3
           livenessProbe:
             httpGet:
               path: /echo/
-              port: 8000
-            initialDelaySeconds: 20  # Большая задержка перед первой проверкой
+              port: 80 
+            initialDelaySeconds: 20
             periodSeconds: 10
-            timeoutSeconds: 2
-            successThreshold: 1
-            failureThreshold: 3
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
             allowPrivilegeEscalation: false
+
 ---
 apiVersion: v1
 kind: Service
@@ -66,5 +61,5 @@ spec:
   ports:
     - name: http
       protocol: TCP
-      port: 80
-      targetPort: 8000
+      port: 80    
+      targetPort: 80  
