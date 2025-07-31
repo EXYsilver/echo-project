@@ -20,7 +20,7 @@ spec:
             - containerPort: 8000 
           env:
             - name: ECHO_MESSAGE
-              value: "Hello from K8s"
+              value: "Hello from Abdullo"
           readinessProbe:
             httpGet:
               path: /echo/
