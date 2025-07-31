@@ -15,14 +15,24 @@ Minimal web service with an `/echo` endpoint that returns an environment variabl
 
 ## Installation
 
-### 1. Build Docker image
+### 1. Start Minikube:
 ```bash
-docker build -t echo-service .
-kubectl apply -f k8s/deployment.yaml
-kubectl port-forward service/echo-service 8080:80
 minikube start
 eval $(minikube docker-env)
 ```
+
+### 2. Build Docker image
+```bash
+docker build -t echo-service .
+kubectl apply -f k8s/deployment.yaml
+```
+
+### 3. Access the service:
+```bash
+kubectl port-forward service/echo-service 8080:80
+```
+
+Then visit: http://localhost:8080/echo
 
 ## Author
 Maksudov Abdullo
