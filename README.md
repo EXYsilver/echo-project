@@ -24,6 +24,7 @@ eval $(minikube docker-env)
 ### 2. Build Docker image
 ```bash
 docker build -t echo-service .
+kubectl apply -f k8s/configmap.yaml
 kubectl apply -f k8s/deployment.yaml
 ```
 
@@ -33,6 +34,16 @@ kubectl port-forward service/echo-service 8080:80
 ```
 
 Then visit: http://localhost:8080/echo
+
+## CI/CD
+
+This project includes a GitHub Actions workflow that automatically builds the Docker image on push to the `main` branch.
+
+- File: `.github/workflows/build.yml`
+- Platform: [GitHub Actions](https://docs.github.com/en/actions)
+
+This ensures your Docker image is always up-to-date and buildable after every commit.
+
 
 ## Author
 Maksudov Abdullo
