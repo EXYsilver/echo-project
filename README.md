@@ -20,6 +20,8 @@ Minimal web service with an `/echo` endpoint that returns an environment variabl
 docker build -t echo-service .
 kubectl apply -f k8s/deployment.yaml
 kubectl port-forward service/echo-service 8080:80
+minikube start
+eval $(minikube docker-env)
 ```
 
 ## Author
